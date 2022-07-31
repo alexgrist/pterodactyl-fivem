@@ -27,7 +27,7 @@ else
 	VERSION_LINK=$(echo -e "${RELEASE_PAGE}" | grep -Eo '".*/*.tar.xz"' | grep -Eo '".*"' | sed 's/\"//g' | sed 's/\.\///1' | grep ${CFX_VERSION})
 
 	if [[ "${VERSION_LINK}" == "" ]]; then
-		echo -e "defaulting to recommedned as the version requested was invalid."
+		echo -e "defaulting to recommended as the version requested was invalid."
 		DOWNLOAD_LINK=$(echo $CHANGELOGS_PAGE | jq -r '.recommended_download')
 	else
 		DOWNLOAD_LINK=$(echo https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${VERSION_LINK})
