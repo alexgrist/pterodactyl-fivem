@@ -44,23 +44,25 @@ if [ ! -z "${DOWNLOAD_URL}" ]; then
 	fi
 fi
 
-echo -e "Running curl -sSL ${DOWNLOAD_LINK} -o ${DOWNLOAD_LINK##*/}"
-curl -sSL ${DOWNLOAD_LINK} -o ${DOWNLOAD_LINK##*/}
-echo "Extracting fivem artifacts"
-FILETYPE=$(file -F ',' ${DOWNLOAD_LINK##*/} | cut -d',' -f2 | cut -d' ' -f2)
+if [ ! -z "${DOWNLOAD_LINK}" ]; then
+	echo -e "Running curl -sSL ${DOWNLOAD_LINK} -o ${DOWNLOAD_LINK##*/}"
+	curl -sSL ${DOWNLOAD_LINK} -o ${DOWNLOAD_LINK##*/}
+	echo "Extracting fivem artifacts"
+	FILETYPE=$(file -F ',' ${DOWNLOAD_LINK##*/} | cut -d',' -f2 | cut -d' ' -f2)
 
-if [ "$FILETYPE" == "gzip" ]; then
-	tar xzf ${DOWNLOAD_LINK##*/}
-elif [ "$FILETYPE" == "Zip" ]; then
-	unzip ${DOWNLOAD_LINK##*/}
-elif [ "$FILETYPE" == "XZ" ]; then
-	tar xf ${DOWNLOAD_LINK##*/}
-else
-	echo -e "unknown filetype. Exiting"
-	exit 2
+	if [ "$FILETYPE" == "gzip" ]; then
+		tar xzf ${DOWNLOAD_LINK##*/}
+	elif [ "$FILETYPE" == "Zip" ]; then
+		unzip ${DOWNLOAD_LINK##*/}
+	elif [ "$FILETYPE" == "XZ" ]; then
+		tar xf ${DOWNLOAD_LINK##*/}
+	else
+		echo -e "unknown filetype. Exiting"
+		exit 2
+	fi
+
+	rm -rf ${DOWNLOAD_LINK##*/} run.sh
 fi
-
-rm -rf ${DOWNLOAD_LINK##*/} run.sh
 
 # Display the command we're running in the output, and then execute it with the env
 # from the container itself.
