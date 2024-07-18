@@ -24,7 +24,7 @@ if [[ "${FIVEM_VERSION}" == "recommended" ]] || [[ -z ${FIVEM_VERSION} ]]; then
 elif [[ "${FIVEM_VERSION}" == "latest" ]]; then
 	DOWNLOAD_LINK=$(echo $CHANGELOGS_PAGE | jq -r '.latest_download')
 else
-	VERSION_LINK=$(echo -e "${RELEASE_PAGE}" | grep -Eo '".*/*.tar.xz"' | grep -Eo '".*"' | sed 's/\"//g' | sed 's/\.\///1' | grep ${CFX_VERSION})
+	VERSION_LINK=$(echo -e "${RELEASE_PAGE}" | grep -Eo '".*/*.tar.xz"' | grep -Eo '".*"' | sed 's/\"//g' | sed 's/\.\///1' | grep ${FIVEM_VERSION})
 
 	if [[ "${VERSION_LINK}" == "" ]]; then
 		echo -e "defaulting to recommended as the version requested was invalid."
